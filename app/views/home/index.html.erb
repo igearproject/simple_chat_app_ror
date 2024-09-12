@@ -1,0 +1,34 @@
+<div style="text-align: center;">
+  <h2>Chat Application</h2>
+
+  <%= form_with(model: @message, local: true)  do |form| %>
+    <%= form.label :body, 'Type a message' %>
+    <%= form.text_field :body, required: true, data: { message: true } %>
+  <% end %>
+
+  <!-- Dummy message we will be using this to create a new message -->
+  <p id="dummy_message"></p>
+
+  <div id="messages">
+    <%= render @messages %>
+  </div>
+</div>
+
+<script>
+    // Temukan semua elemen yang memiliki atribut `data-message=true`
+    document.querySelectorAll('[data-message="true"]').forEach(function(element) {
+        // Tambahkan event listener untuk "keypress"
+        element.addEventListener('keypress', function(event) {
+        // Cek jika tombol yang ditekan adalah Enter (keyCode 13) dan value input tidak kosong
+            if (event.keyCode === 13 && event.target.value !== '') {
+                event.preventDefault();
+                // Panggil fungsi `send_message` dari App.chat
+                App.chat.send_message(event.target.value);
+                // Kosongkan input setelah mengirim pesan
+                event.target.value = '';
+                // Cegah aksi default dari tombol Enter (misalnya submit form)
+                
+            }
+        });
+    });
+</script>
