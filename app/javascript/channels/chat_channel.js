@@ -23,6 +23,9 @@ export default consumer.subscriptions.create("ChatChannel", {
 
     // Temukan elemen dengan id 'messages' dan append cloned element ke dalamnya
     document.getElementById('messages').appendChild(clonedMessage);
+
+    const messagesContainer = document.getElementById('messages');
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
   },
 
   send_message: function(message) {

@@ -1,17 +1,28 @@
-<div style="text-align: center;">
-  <h2>Chat Application</h2>
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<div class="container-fluid">
+    <a class="navbar-brand" href="#">Broadcast Chat</a>
+</div>
+</nav>
 
-  <%= form_with(model: @message, local: true)  do |form| %>
-    <%= form.label :body, 'Type a message' %>
-    <%= form.text_field :body, required: true, data: { message: true } %>
-  <% end %>
-
-  <!-- Dummy message we will be using this to create a new message -->
-  <p id="dummy_message"></p>
-
-  <div id="messages">
+<!-- Chat Container -->
+<div class="container mt-3 chat-container">
+<h2 class="text-center mb-4">Chat Application</h2>
+<p id="dummy_message"></p>
+<!-- Messages Display -->
+<div id="messages" class="messages-container">
     <%= render @messages %>
-  </div>
+</div>
+
+<!-- Input Form -->
+<div class="message-input-container">
+    <%= form_with(model: @message, local: true) do |form| %>
+    <div class="form-floating">
+        <%= form.text_field :body, required: true, data: { message: true }, class: 'form-control', id: 'message-input', placeholder: 'Type a message...' %>
+        <%= form.label :body, 'Type a message', for: 'message-input' %>
+    </div>
+    <% end %>
+</div>
 </div>
 
 <script>
@@ -30,5 +41,10 @@
                 
             }
         });
+    });
+    // Scroll ke bawah saat halaman pertama kali dimuat
+    document.addEventListener('DOMContentLoaded', function() {
+        const messagesContainer = document.getElementById('messages');
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
     });
 </script>
