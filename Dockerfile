@@ -59,12 +59,16 @@ COPY --from=build /rails /rails
 RUN groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
     chown -R rails:rails db log storage tmp
+
+# Tambahan: Memberi izin eksekusi pada entrypoint script sebelum mengubah user
+RUN chmod +x /rails/bin/docker-entrypoint 
+
+# Mengubah user setelah semua izin diberikan
 USER 1000:1000
 
 # Entrypoint prepares the database.
-RUN chmod +x /rails/bin/docker-entrypoint # Tambahan: Memberi izin eksekusi pada entrypoint script
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-CMD ["./bin/rails", "server", "-b", "0.0.0.0", "-p", "3000"] # Perubahan: Memastikan Rails server mendengarkan pada semua interface dan port 3000
+CMD ["./bin/rails", "server", "-b", "0.0.0.0", "-p", "3000"]
