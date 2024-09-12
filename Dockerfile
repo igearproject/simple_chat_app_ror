@@ -40,16 +40,13 @@ RUN bundle install && \
 COPY . .
 
 # Ensure all files in bin/ have execution permission
-RUN chmod +x bin/*
+RUN chmod +x bin/* # Tambahan: Memberi izin eksekusi pada semua file di folder bin/
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
-
-
-
 
 # Final stage for app image
 FROM base
@@ -65,8 +62,9 @@ RUN groupadd --system --gid 1000 rails && \
 USER 1000:1000
 
 # Entrypoint prepares the database.
+RUN chmod +x /rails/bin/docker-entrypoint # Tambahan: Memberi izin eksekusi pada entrypoint script
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-CMD ["./bin/rails", "server"]
+CMD ["./bin/rails", "server", "-b", "0.0.0.0", "-p", "3000"] # Perubahan: Memastikan Rails server mendengarkan pada semua interface dan port 3000
