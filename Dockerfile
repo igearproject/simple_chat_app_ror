@@ -70,7 +70,8 @@ USER 1000:1000
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
-EXPOSE ${PORT:-3000} # Menggunakan port dari environment variable PORT, default ke 3000 jika tidak disediakan
+# Expose the port Puma will run on
+EXPOSE ${PORT:-8080}
 
-# Menggunakan port yang diberikan oleh Back4App melalui environment variable PORT
-CMD ["./bin/rails", "server", "-b", "0.0.0.0", "-p", "${PORT:-3000}"] # Menggunakan port dari environment variable PORT, default ke 3000 jika tidak disediakan
+# Set the default command to start Puma on the specified port
+CMD ["./bin/rails", "server", "-b", "0.0.0.0", "-p", "${PORT:-8080}"]
