@@ -71,7 +71,7 @@ ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
 # Expose the port Puma will run on
-EXPOSE 80
+EXPOSE 3000
 
 # Set the default command to start Puma on the specified port
-CMD ["./bin/rails", "server", "-b", "0.0.0.0", "-p", "80"]
+CMD ["./bin/rails", "server", "-b", "0.0.0.0", "-p", "3000"]
