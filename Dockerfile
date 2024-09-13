@@ -70,7 +70,7 @@ USER 1000:1000
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
-EXPOSE 3000
+EXPOSE ${PORT:-3000} # Menggunakan port dari environment variable PORT, default ke 3000 jika tidak disediakan
 
 # Menggunakan port yang diberikan oleh Back4App melalui environment variable PORT
 CMD ["./bin/rails", "server", "-b", "0.0.0.0", "-p", "${PORT:-3000}"] # Menggunakan port dari environment variable PORT, default ke 3000 jika tidak disediakan
